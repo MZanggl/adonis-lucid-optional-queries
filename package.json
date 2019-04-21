@@ -1,0 +1,24 @@
+{
+  "name": "adonis-lucid-optional-queries",
+  "version": "1.0.0",
+  "description": "Allows implementation of optional queries as a trait in AdonisJs",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "optional-queries",
+    "adonis",
+    "lucid"
+  ],
+  "author": "Michael Zanggl",
+  "license": "MIT",
+  "devDependencies": {
+    "@adonisjs/fold": "^4.0.9",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "mysql": "^2.16.0"
+  },
+  "dependencies": {
+    "@adonisjs/lucid": "^6.1.3"
+  }
+}
