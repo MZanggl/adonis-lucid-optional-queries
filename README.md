@@ -76,6 +76,7 @@ User.query()
         .where('city', request.input('city'))
         .where('zip', request.input('zip'))
         .where('birthday', request.input('birthday'))
+        .byCustomModelScope(request.input('customScopeValue'))
     )
     .fetch()
 ```
