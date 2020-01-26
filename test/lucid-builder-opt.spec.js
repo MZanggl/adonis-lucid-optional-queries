@@ -52,6 +52,17 @@ describe('optional queries', function () {
     
       assert.equal(getWhereCondition(query), "")
     })
+
+    it('ignores empty string in optional where condition with 3 parameters', () => {
+      const query = User.query()
+      .optional(query => query
+        .where('test', '=', '')
+        .where('test2', 'like', '')
+        .where('id', '=', 1)
+      )
+    
+      assert.equal(getWhereCondition(query), "`id` = 1")
+    })
     
     it('ignores null and undefined in optional where condition', () => {
       const query = User.query()
