@@ -1,3 +1,36 @@
+Turns
+
+```javascript
+const User = use('App/Models/User')
+
+const query = User.query().where('active', true)
+
+if (request.input('name')) {
+  query = query.where('name', request.input('name'))
+}
+
+if (request.input('city')) {
+  query = query.where('city', request.input('city'))
+}
+
+query.fetch()
+```
+
+into
+
+```javascript
+const User = use('App/Models/User')
+
+User.query()
+    .where('active', true)
+    .optional(query => query
+        .where('name', request.input('name'))
+        .where('city', request.input('city'))
+    )
+    .fetch()
+```
+
+
 ### Installation
 
 ```bash
@@ -10,7 +43,7 @@ Make sure to register the provider inside start/app.js
 
 ```javascript
 const providers = [
-  "adonis-lucid-optional-queries/providers/OptionalQueriesProvider"
+  'adonis-lucid-optional-queries/providers/OptionalQueriesProvider'
 ]
 ```
 
@@ -19,13 +52,13 @@ const providers = [
 First add the trait to the model.
 
 ```javascript
-const Model = use("Model")
+const Model = use('Model')
 
 class User extends Model {
   static boot() {
     super.boot()
 
-    this.addTrait("@provider:Lucid/OptionalQueries")
+    this.addTrait('@provider:Lucid/OptionalQueries')
   }
 }
 ```
@@ -33,7 +66,7 @@ class User extends Model {
 Finally use the method as follows
 
 ```javascript
-const User = use("App/Models/User")
+const User = use('App/Models/User')
 
 User.query()
     .where('active', true)
@@ -43,6 +76,7 @@ User.query()
         .where('city', request.input('city'))
         .where('zip', request.input('zip'))
         .where('birthday', request.input('birthday'))
+        .byCustomModelScope(request.input('customScopeValue'))
     )
     .fetch()
 ```
@@ -57,6 +91,14 @@ That means if `name` and `city` are filled in the request, but not `zip` and `bi
 select * from users where `active` = true and `group` = 1 and `name` = 'Lukas' and `city` = 'Tokyo';
 ```
 
-> What is considered falsy is: undefined, null, [], ''
+> What is considered falsy is: undefined, null, [], '', false
 
-> What is not considered falsy: false, 0, '0'
+> What is not considered falsy: 0, '0'
+
+## tests
+
+Run tests using
+
+```javascript
+npm test
+```

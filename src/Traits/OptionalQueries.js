@@ -41,7 +41,11 @@ class OptionalQueries {
         return true
       }
   
-      if (typeof value === 'string' && value !== '0' && !value) {
+      if (value === '') {
+        return true
+      }
+
+      if (value === false) {
         return true
       }
   

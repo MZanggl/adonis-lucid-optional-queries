@@ -35,7 +35,7 @@ describe('optional queries', function () {
   })
   
   describe('ignore', () => {
-    it('ignores empty array in optional where condition', () => {
+    it('ignores empty object in optional where condition', () => {
       const query = User.query()
       .optional(query => query
         .whereIn('tags', [])
@@ -63,6 +63,15 @@ describe('optional queries', function () {
     
       assert.equal(getWhereCondition(query), "`id` = 1")
     })
+
+    it('ignores boolean false in optional where condition', () => {
+      const query = User.query()
+      .optional(query => query
+        .where('test', false)
+      )
+    
+      assert.equal(getWhereCondition(query), "")
+    })
     
     it('ignores null and undefined in optional where condition', () => {
       const query = User.query()
@@ -83,15 +92,6 @@ describe('optional queries', function () {
       )
     
       assert.equal(getWhereCondition(query), "`test` = 0")
-    })
-    
-    it('does not ignore false in optional where condition', () => {
-      const query = User.query()
-      .optional(query => query
-        .where('test', false)
-      )
-    
-      assert.equal(getWhereCondition(query), "`test` = false")
     })
   })
 })
